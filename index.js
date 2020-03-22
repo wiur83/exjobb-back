@@ -3,18 +3,17 @@ const express = require('express');
 const app = express();
 const dotenv = require("dotenv");
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+var cors = require('cors');
 //Importing routes
 const authRoute = require("./routes/auth");
 const verify = require("./routes/verifyToken");
+//Variables
+const port = 3000;
 
-//NY
-const bodyParser = require('body-parser');
-var cors = require('cors')
 
 //Config
 dotenv.config();
-// app.use(express.urlencoded({ extended: false }));
-
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
@@ -34,7 +33,7 @@ app.get("/", (req, res) => {
 
 
 
-//LOGIN ROUTE
+//Token test POST
 app.post("/token-server", verify, async (req, res) => {
     res.json({ msg: req.user });
 });
@@ -48,5 +47,4 @@ app.use(express.json());
 app.use("/api/user", authRoute);
 
 
-
-app.listen(3000, () => console.log("the server is running on posrt 3000"));
+app.listen(port, () => console.log(`the server is running on port ${port}`));
